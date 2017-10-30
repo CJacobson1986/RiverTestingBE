@@ -12,5 +12,13 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('register', 'UserController@store');
+Route::post('logIn', 'UserController@logIn');
+Route::get('getUser', 'UserController@get');
+Route::get('showUser/{id}', 'UserController@show');
+Route::get('getUsers', 'UserController@index');
+Route::post('editUser', 'UserController@update');
+Route::post('reviewUser', 'UserController@review');
+Route::get('searchUsers/{search_term}', 'UserController@search');
 
 Route::any('{path?}', 'MainController@index')->where("path", ".+");
