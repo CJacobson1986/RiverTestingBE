@@ -15,7 +15,7 @@ class Products extends Migration
     {
       Schema::create('products', function (Blueprint $table) {
           $table->increments('id');
-          $table->increments('userId');
+          $table->integer('userId');
           $table->string('dates');
           $table->timestamps();
       });
@@ -28,6 +28,6 @@ class Products extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('products');
     }
 }

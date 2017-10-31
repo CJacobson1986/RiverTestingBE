@@ -61,7 +61,8 @@ class UserController extends Controller
   # name, email, password -> user
   public function store(Request $request) {
     $rules = [
-      'name' => 'required',
+      'fullName' => 'required',
+      'phoneNumber' => 'required',
       'email' => 'required',
       'password' => 'required',
       'role_id' => 'required'
@@ -78,18 +79,18 @@ class UserController extends Controller
       return Response::json(['error' => 'That email is already taken.']);
     }
 
-    $name =  $request->input('name');
+    $fullName =  $request->input('fullName');
+    $phoneNumber = $request->input('phoneNumber');
     $role = $request->input('role_id');
     $password = $request->input('password');
     $password = Hash::make($password);
 
     $user = new User;
     $user->email = $email;
-    $user->name = $name;
+    $user->fullName = $fullName;
+    $user->phoneNumber = $phoneNumber;
     $user->password = $password;
     $user->role_id = $role;
-    $user->bio = "";
-    $user->photo = "";
     $user->save();
 
     return Response::json([
@@ -101,9 +102,8 @@ class UserController extends Controller
   # token, bio, phone, location -> user
   public function update(Request $request) {
     $rules = [
-      'bio' => 'required',
+      'fullName' => 'required',
       'phone' => 'required',
-      'location' => 'required',
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
@@ -117,26 +117,11 @@ class UserController extends Controller
       return Response::json(['error' => 'User does not exist', 'id' => $id]);
     }
 
-    $bio = $request->input('bio');
-    $location = $request->input('location');
+    $fullName = $request->input('fullName');
     $phone = $request->input('phone');
-
-    $user->bio = $bio;
-    $user->location = $location;
+    
+    $user->fullName = $fullName;
     $user->phone = $phone;
-
-    $photoInput = $request->file('photo');
-    if(!empty($photoInput)) {
-      $img = Image::make($photoInput);
-      $img->resize(400, 400, function ($constraint) {
-        $constraint->upsize();
-        $constraint->aspectRatio();
-      });
-
-      $photoName = $id . ".profile_photo.png" ;
-      $img->save('storage/'. $photoName);
-      $user->photo = $request->root() . "/storage/" . $photoName;
-    }
 
     $user->save();
 
@@ -147,7 +132,7 @@ class UserController extends Controller
   }
 
   # email, password -> token
-  public function signIn(Request $request) {
+  public function logIn(Request $request) {
     $rules = [
       'email' => 'required',
       'password' => 'required'
