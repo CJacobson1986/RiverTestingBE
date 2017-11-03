@@ -65,7 +65,10 @@ class UserController extends Controller
       'phoneNumber' => 'required',
       'email' => 'required',
       'password' => 'required',
-      'role_id' => 'required'
+      'role_id' => 'required',
+      'address' => 'required',
+      'certification' => 'required',
+      'certificationId' => 'required'
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
@@ -82,6 +85,9 @@ class UserController extends Controller
     $fullName =  $request->input('fullName');
     $phoneNumber = $request->input('phoneNumber');
     $role = $request->input('role_id');
+    $address = $request->input('address');
+    $certification = $request->input('certification');
+    $certificationId = $request->input('certificationId');
     $password = $request->input('password');
     $password = Hash::make($password);
 
@@ -91,10 +97,13 @@ class UserController extends Controller
     $user->phoneNumber = $phoneNumber;
     $user->password = $password;
     $user->role_id = $role;
+    $user->address = $address;
+    $user->certification = $certification;
+    $user->certificationId = $certificationId;
     $user->save();
 
     return Response::json([
-      'success' => 'Thanks for signing up!',
+      'success' => 'Thanks for signing up! When authorized you will be able to log-in.',
       'user' => $user
     ]);
   }
@@ -103,7 +112,11 @@ class UserController extends Controller
   public function update(Request $request) {
     $rules = [
       'fullName' => 'required',
-      'phone' => 'required',
+      'phoneNumber' => 'required',
+      'testingLocation' => 'required',
+      'address' => 'required',
+      'certification' => 'required',
+      'certificationId' => 'required'
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
@@ -118,10 +131,18 @@ class UserController extends Controller
     }
 
     $fullName = $request->input('fullName');
-    $phone = $request->input('phone');
-    
+    $phoneNumber = $request->input('phoneNumber');
+    $testingLocation = $request->input('testingLocation');
+    $address = $request->input('address');
+    $certification = $request->input('certification');
+    $certificaitonId = $request->input('certificationId');
+
     $user->fullName = $fullName;
-    $user->phone = $phone;
+    $user->phoneNumber = $phoneNumber;
+    $user->testingLocation = $testingLocation;
+    $user->address = $address;
+    $user->certification = $certification;
+    $user->certificationId = $certificationId;
 
     $user->save();
 
