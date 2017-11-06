@@ -116,7 +116,9 @@ class UserController extends Controller
       'testingLocation' => 'required',
       'address' => 'required',
       'certification' => 'required',
-      'certificationId' => 'required'
+      'certificationId' => 'required',
+      'pickUpDate' => 'required',
+      'testingFrequency' => 'required',
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
@@ -135,7 +137,9 @@ class UserController extends Controller
     $testingLocation = $request->input('testingLocation');
     $address = $request->input('address');
     $certification = $request->input('certification');
-    $certificaitonId = $request->input('certificationId');
+    $certificationId = $request->input('certificationId');
+    $pickUpDate = $request->input('pickUpDate');
+    $testingFrequency = $request->input('testingFrequency');
 
     $user->fullName = $fullName;
     $user->phoneNumber = $phoneNumber;
@@ -143,6 +147,8 @@ class UserController extends Controller
     $user->address = $address;
     $user->certification = $certification;
     $user->certificationId = $certificationId;
+    $user->pickUpDate = $pickUpDate;
+    $user->testingFrequency = $testingFrequency;
 
     $user->save();
 

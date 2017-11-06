@@ -17,7 +17,7 @@ Route::post('logIn', 'UserController@logIn');
 Route::get('getUser', 'UserController@get');
 Route::get('showUser/{id}', 'UserController@show');
 Route::get('getUsers', 'UserController@index');
-Route::post('editUser', 'UserController@update');
+Route::post('updateUser', 'UserController@update');
 Route::post('reviewUser', 'UserController@review');
 Route::get('searchUsers/{search_term}', 'UserController@search');
 

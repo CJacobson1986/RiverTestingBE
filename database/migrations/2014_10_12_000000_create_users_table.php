@@ -23,6 +23,9 @@ class CreateUsersTable extends Migration
             $table->string('certification');
             $table->string('certificationId');
             $table->integer('role_id');
+            $table->string('pickUpDate')->nullable();
+            $table->string('testingFrequency')->nullable();
+            $table->string('testingLocation')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
